@@ -4,7 +4,7 @@ import tkinter.messagebox as tmsg
 import os
 import time
 
-#===================Python Variables=======================
+
 menu_category = ["Tea & Coffee","Beverages","Fast Food","South Indian","Starters","Main Course","Dessert"]
 
 menu_category_dict = {"Tea & Coffee":"1 Tea & Coffee.txt","Beverages":"2 Beverages.txt",
@@ -17,7 +17,7 @@ for i in menu_category:
     order_dict[i] = {}
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-#====================Backend Functions===========================
+
 def load_menu():
     menuCategory.set("")
     menu_tabel.delete(*menu_tabel.get_children())
@@ -200,14 +200,14 @@ def bill_button_operation():
         st += "\t\t\tGST.NO:- 27AHXPP3379HIZH\n"
         st += "-"*61 + "BILL" + "-"*61 + "\nDate:- "
 
-        #Date and time
+       
         t = time.localtime(time.time())
         week_day_dict = {0:"Monday",1:"Tuesday",2:"Wednesday",3:"Thursday",4:"Friday",5:"Saturday",
                             6:"Sunday"}
         st += f"{t.tm_mday} / {t.tm_mon} / {t.tm_year} ({week_day_dict[t.tm_wday]})"
         st += " "*10 + f"\t\t\t\t\t\tTime:- {t.tm_hour} : {t.tm_min} : {t.tm_sec}"
 
-        #Customer Name & Contact
+      
         st += f"\nCustomer Name:- {customer_name}\nCustomer Contact:- {customer_contact}\n"
         st += "-"*130 + "\n" + " "*4 + "DESCRIPTION\t\t\t\t\tRATE\tQUANTITY\t\tAMOUNT\n"
         st += "-"*130 + "\n"
@@ -223,14 +223,13 @@ def bill_button_operation():
                 st += name + "\t\t\t\t\t" + rate + "\t      " + quantity + "\t\t  " + price + "\n\n"
         st += "-"*130
 
-        #Total Price
         st += f"\n\t\t\tTotal price : {totalPrice.get()}\n"
         st += "-"*130
 
-        #display bill in new window
+    
         bill_text_area.insert(1.0, st)
 
-        #write into file
+        
         folder = f"{t.tm_mday},{t.tm_mon},{t.tm_year}"
         if not os.path.exists(f"Bill Records\\{folder}"):
             os.makedirs(f"Bill Records\\{folder}")
@@ -238,7 +237,7 @@ def bill_button_operation():
         file.write(st)
         file.close()
 
-        #Clear operaitons
+        
         order_tabel.delete(*order_tabel.get_children())
         for i in menu_category:
             order_dict[i] = {}
@@ -254,19 +253,15 @@ def bill_button_operation():
 def close_window():
     tmsg.showinfo("Thanks", "Thanks for using our service")
     root.destroy()
-#[name,rate,quantity,str(int(rate)*int(quantity)),category]
-#==================Backend Code Ends===============
 
-#================Frontend Code Start==============
 root = Tk()
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
 root.geometry("%dx%d+0+0" % (w, h))
 root.title("Welcome to Sample Hotel")
 root.wm_iconbitmap("Burger.ico")
-#root.attributes('-fullscreen', True)
-#root.resizable(0, 0)
 
-#================Title==============
+
+
 style_button = ttk.Style()
 style_button.configure("TButton",font = ("arial",10,"bold"),
    background="lightgreen")
@@ -278,7 +273,7 @@ title_label = Label(title_frame, text="Sample Hotel",
                     font=("times new roman", 20, "bold"),bg = "yellow", fg="red", pady=5)
 title_label.pack()
 
-#==============Customer=============
+
 customer_frame = LabelFrame(root,text="Customer Details",font=("times new roman", 15, "bold"),
                             bd=8, bg="lightblue", relief=GROOVE)
 customer_frame.pack(side=TOP, fill="x")
@@ -303,7 +298,7 @@ customer_contact_entry = Entry(customer_frame,width=20,font="arial 15",bd=5,
                                 textvariable=customerContact)
 customer_contact_entry.grid(row = 0, column=3,padx=50)
 
-#===============Menu===============
+
 menu_frame = Frame(root,bd=8, bg="lightgreen", relief=GROOVE)
 menu_frame.place(x=0,y=125,height=585,width=680)
 
@@ -331,7 +326,7 @@ show_all_button = ttk.Button(menu_category_frame, text="Show All",
                         width=10,command=load_menu)
 show_all_button.grid(row=0,column=3)
 
-############################# Menu Tabel ##########################################
+
 menu_tabel_frame = Frame(menu_frame)
 menu_tabel_frame.pack(fill=BOTH,expand=1)
 
@@ -361,13 +356,11 @@ scrollbar_menu_y.configure(command=menu_tabel.yview)
 menu_tabel.pack(fill=BOTH,expand=1)
 
 
-#menu_tabel.insert('',END,values=["Masala Dosa","50"])
+
 load_menu()
 menu_tabel.bind("<ButtonRelease-1>",load_item_from_menu)
 
-###########################################################################################
 
-#===============Item Frame=============
 item_frame = Frame(root,bd=8, bg="lightgreen", relief=GROOVE)
 item_frame.place(x=680,y=125,height=230,width=680)
 
@@ -427,7 +420,7 @@ clear_button = ttk.Button(item_frame3, text="Clear",
                         width=8,command=clear_button_operation)
 clear_button.grid(row=0,column=3,padx=40,pady=30)
 
-#==============Order Frame=====================
+
 order_frame = Frame(root,bd=8, bg="lightgreen", relief=GROOVE)
 order_frame.place(x=680,y=335,height=370,width=680)
 
@@ -435,7 +428,7 @@ order_title_label = Label(order_frame, text="Your Order",
                     font=("times new roman", 20, "bold"),bg = "lightgreen", fg="red")
 order_title_label.pack(side=TOP,fill="x")
 
-############################## Order Tabel ###################################
+
 order_tabel_frame = Frame(order_frame)
 order_tabel_frame.place(x=0,y=40,height=260,width=680)
 
@@ -466,8 +459,7 @@ scrollbar_order_y.configure(command=order_tabel.yview)
 
 order_tabel.pack(fill=BOTH,expand=1)
 
-# order_tabel.insert('',END,text="HEllo",values=["Masala Dosa","50","2","100"])
-###########################################################################################
+
 
 total_price_label = Label(order_frame, text="Total Price", 
                     font=("arial", 12, "bold"),bg = "lightgreen", fg="blue")
@@ -487,4 +479,3 @@ cancel_button = ttk.Button(order_frame, text="Cancel Order",command=cancel_butto
 cancel_button.pack(side=LEFT,anchor=SW,padx=20,pady=10)
 
 root.mainloop()
-#====================Frontend code ends=====================
